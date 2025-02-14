@@ -17,4 +17,4 @@ RUN mkdir -p /app/pb_data && chmod -R 777 /app/pb_data
 EXPOSE 8080
 
 # Command to run PocketBase
-CMD ["./pocketbase", "serve", "--http", "0.0.0.0:9000", "--dir", "/app/pb_data"]
+CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8080", "--dir", "/app/pb_data"]
