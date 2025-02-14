@@ -1,20 +1,20 @@
-# Use a lightweight Alpine Linux base image
-FROM alpine:latest  
+# Use a lightweight Linux image
+FROM alpine:latest
 
-# Set the working directory inside the container
-WORKDIR /app  
+# Set the working directory
+WORKDIR /app
 
-# Install dependencies: curl and unzip
-RUN apk add --no-cache curl unzip  
+# Copy the PocketBase binary into the container
+COPY pocketbase /app/pocketbase
 
-# Download the latest PocketBase release
-RUN curl -fsSL https://github.com/pocketbase/pocketbase/releases/latest/download/pocketbase-linux-amd64.zip -o pocketbase.zip  
+# Make the PocketBase binary executable
+RUN chmod +x /app/pocketbase
 
-# Unzip and clean up
-RUN unzip pocketbase.zip && rm pocketbase.zip  
+# Ensure /data exists and is writable
+RUN mkdir -p /data && chmod -R 777 /data
 
-# Give execution permission
-RUN chmod +x pocketbase  
+# Expose the default PocketBase port
+EXPOSE 8080
 
-# Start PocketBase on port 3000
-CMD ["./pocketbase", "serve", "--http=0.0.0.0:3000"]
+# Command to run PocketBase
+CMD ["./pocketbase", "serve", "--http=0.0.0.0:8080", "--dir=/data"]
