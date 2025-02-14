@@ -10,11 +10,11 @@ COPY pocketbase /app/pocketbase
 # Make the PocketBase binary executable
 RUN chmod +x /app/pocketbase
 
-# Ensure /data exists and is writable
-RUN mkdir -p /data && chmod -R 777 /data
+# Ensure pb_data exists and is writable
+RUN mkdir -p /app/pb_data && chmod -R 777 /app/pb_data
 
 # Expose the default PocketBase port
 EXPOSE 8080
 
 # Command to run PocketBase
-CMD ["./pocketbase serve --http 0.0.0.0:9000 --dir /app/pb_data"]
+CMD ["./pocketbase", "serve", "--http", "0.0.0.0:9000", "--dir", "/app/pb_data"]
